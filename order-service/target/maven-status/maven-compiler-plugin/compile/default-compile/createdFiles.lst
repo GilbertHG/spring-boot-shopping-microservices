@@ -1,0 +1,11 @@
+sg/com/fairtech/order/service/service/OrderService.class
+sg/com/fairtech/order/service/config/WebClientConfig.class
+sg/com/fairtech/order/service/model/OrderLineItems.class
+sg/com/fairtech/order/service/OrderServiceApplication.class
+sg/com/fairtech/order/service/dto/OrderLineItemsDto.class
+sg/com/fairtech/order/service/model/Order.class
+sg/com/fairtech/order/service/repository/OrderRepository.class
+sg/com/fairtech/order/service/dto/OrderRequest.class
+sg/com/fairtech/order/service/controller/OrderController.class
+sg/com/fairtech/order/service/dto/InventoryResponse.class
+sg/com/fairtech/order/service/dto/InventoryResponse$InventoryResponseBuilder.class

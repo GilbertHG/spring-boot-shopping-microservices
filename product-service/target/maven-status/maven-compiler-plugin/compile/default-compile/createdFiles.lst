@@ -1,0 +1,10 @@
+sg/com/fairtech/product/service/ProductServiceApplication.class
+sg/com/fairtech/product/service/dto/ProductRequest.class
+sg/com/fairtech/product/service/dto/ProductResponse.class
+sg/com/fairtech/product/service/service/ProductService.class
+sg/com/fairtech/product/service/dto/ProductResponse$ProductResponseBuilder.class
+sg/com/fairtech/product/service/model/Product.class
+sg/com/fairtech/product/service/dto/ProductRequest$ProductRequestBuilder.class
+sg/com/fairtech/product/service/controller/ProductController.class
+sg/com/fairtech/product/service/repository/ProductRepository.class
+sg/com/fairtech/product/service/model/Product$ProductBuilder.class

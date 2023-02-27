@@ -1,0 +1,7 @@
+sg/com/fairtech/inventory/service/repository/InventoryRepository.class
+sg/com/fairtech/inventory/service/controller/InventoryController.class
+sg/com/fairtech/inventory/service/dto/InventoryResponse.class
+sg/com/fairtech/inventory/service/model/Inventory.class
+sg/com/fairtech/inventory/service/service/InventoryService.class
+sg/com/fairtech/inventory/service/dto/InventoryResponse$InventoryResponseBuilder.class
+sg/com/fairtech/inventory/service/InventoryServiceApplication.class

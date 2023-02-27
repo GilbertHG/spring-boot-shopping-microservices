@@ -1,0 +1,10 @@
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/OrderServiceApplication.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/model/Order.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/service/OrderService.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/dto/InventoryResponse.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/dto/OrderLineItemsDto.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/config/WebClientConfig.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/controller/OrderController.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/dto/OrderRequest.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/repository/OrderRepository.java
+/Users/gilberthymangoes/Documents/project/course/microservices-courses/order-service/src/main/java/sg/com/fairtech/order/service/model/OrderLineItems.java

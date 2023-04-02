@@ -1,5 +1,7 @@
 package sg.com.fairtech.order.service.service;
 
+import io.micrometer.tracing.Span;
+import io.micrometer.tracing.Tracer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final WebClient.Builder webClientBuilder;
+    private final Tracer tracer;
 
     public String placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
@@ -36,24 +39,29 @@ public class OrderService {
 
         List<String> skuCodes = order.getOrderLineItemsList().stream().map(OrderLineItems::getSkuCode).toList();
 
-        // Call Inventory Service, and place order if product is in
-        // stock
-        InventoryResponse[] inventoryResponseArray = webClientBuilder.build().get().uri("http://inventory-service:8082/api/inventory",
-                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
-                        .retrieve()
-                        .bodyToMono(InventoryResponse[].class)
-                        .block();
+        Span inventoryServiceLookup = tracer.nextSpan().name("InventoryServiceLookup");
+        try(Tracer.SpanInScope spanInScope = tracer.withSpan(inventoryServiceLookup.start())) {
+            // Call Inventory Service, and place order if product is in
+            // stock
+            InventoryResponse[] inventoryResponseArray = webClientBuilder.build().get().uri("http://inventory-service:8082/api/inventory",
+                            uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+                    .retrieve()
+                    .bodyToMono(InventoryResponse[].class)
+                    .block();
 
-        boolean allProductsInStock = false;
-        if (inventoryResponseArray != null) {
-            allProductsInStock = Arrays.stream(inventoryResponseArray).allMatch(InventoryResponse::isInStock);
-        }
+            boolean allProductsInStock = false;
+            if (inventoryResponseArray != null) {
+                allProductsInStock = Arrays.stream(inventoryResponseArray).allMatch(InventoryResponse::isInStock);
+            }
 
-        if (allProductsInStock) {
-            orderRepository.save(order);
-            return "Order placed successfully!";
-        } else {
-            throw new IllegalArgumentException("Product is not in stock, please try again later");
+            if (allProductsInStock) {
+                orderRepository.save(order);
+                return "Order placed successfully!";
+            } else {
+                throw new IllegalArgumentException("Product is not in stock, please try again later");
+            }
+        } finally {
+            inventoryServiceLookup.end();
         }
     }
 

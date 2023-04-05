@@ -3,12 +3,14 @@ package sg.com.fairtech.order.service.service;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import sg.com.fairtech.order.service.dto.InventoryResponse;
 import sg.com.fairtech.order.service.dto.OrderLineItemsDto;
 import sg.com.fairtech.order.service.dto.OrderRequest;
+import sg.com.fairtech.order.service.event.OrderPlacedEvent;
 import sg.com.fairtech.order.service.model.Order;
 import sg.com.fairtech.order.service.model.OrderLineItems;
 import sg.com.fairtech.order.service.repository.OrderRepository;
@@ -25,6 +27,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final WebClient.Builder webClientBuilder;
     private final Tracer tracer;
+    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     public String placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
@@ -56,6 +59,7 @@ public class OrderService {
 
             if (allProductsInStock) {
                 orderRepository.save(order);
+                kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(order.getOrderNumber()));
                 return "Order placed successfully!";
             } else {
                 throw new IllegalArgumentException("Product is not in stock, please try again later");
